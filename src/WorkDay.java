@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Iterator;
 
 public class WorkDay {
 
@@ -48,18 +49,30 @@ public class WorkDay {
     }
 
     public  void assignTechs() {
+
         // assigning technicians to customers
         /* Not every nail tech can perform every service (acceptedCategories)
         *
-        * this logic should:
-        *  1: check what service the customer is requesting
-        *  2: check that the service request and the employee accepted categories match
-        *  3: while both Q's are not empty,
-        *  4: peek at both Q's to see if the service request and category match.
-        *  5: track the nail  technicians you've checked to do the service. keep checking until you find the right one
-        *  6: assign the right tech to the customer
-        *  7: print a statement that there's no one available for a customer if there is no tech assigned to that customer
+        * Employees enter EmployeeQ  e1 - e2 - e3 - e4
+        * Customers enter customerQ  c1 - c2 - c3 - c4
+        *
+        * for c1's request we have to check who is first in the employeeQ
+        * if e1 canPerform c1's request remove both e1 and c1 from their Q's
+        * else - offer e1 back to his Q , poll the next e , repeat until you find the right e for the service request
         * */
+
+        // as long as there are customers waiting and employees available
+        while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
+
+            // check if an employee can perform a service
+            for (Employee employee : employeeQ) {
+                if (employee.canPerform(customerQ.element().getRequestedService())) {
+                    System.out.println(employee + " can perform " + customerQ.element().getRequestedService() + " for " + customerQ.element().getName());
+                }
+            }
+
+        }
+
 
 
 
