@@ -35,11 +35,8 @@ public class Driver {
         workDay.addCustomer(c3);
         workDay.addCustomer(c4);
 
-
-
-
-        workDay.clockIn();
-        workDay.customerRequests();
+        // run sim
         workDay.assignTechs();
+
     }
 }

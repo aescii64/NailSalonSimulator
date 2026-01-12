@@ -1,3 +1,4 @@
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -5,7 +6,7 @@ import java.util.Iterator;
 
 public class WorkDay {
 
-    private Queue<Employee> employeeQ;
+    private static Queue<Employee> employeeQ;
     private Queue<Customer> customerQ;
     private List<ServiceSelector> serviceRequest;
 
@@ -30,7 +31,7 @@ public class WorkDay {
 
 
     // test workday simulation
-    public void clockIn(){
+    private void clockIn(){
         System.out.println("---- Employees are arriving!! ----\n");
         for ( Employee e : employeeQ) {
             System.out.println(e.getName() + " has arrived");
@@ -38,7 +39,7 @@ public class WorkDay {
         }
     }
 
-    public void customerRequests() {
+    private void customerRequests() {
         System.out.println("---- Customers are checking in!! ----\n");
         for (Customer c : customerQ) {
             System.out.println(c.getName() + " just checked in");
@@ -49,34 +50,27 @@ public class WorkDay {
 
     }
 
-    private static void assignEmployees() {
+    private  void assignEmployees() {
+        Customer currentCustomer = customerQ.element();
+        while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
+            for (Employee employee : employeeQ) {
+                if (employee.canPerform((currentCustomer.getRequestedService()))) {
+                    System.out.println(employee.getName() + " can perform " + currentCustomer.getRequestedService() + " for " + currentCustomer);
+                    employeeQ.remove(employee);
+                    customerQ.remove(currentCustomer);
+
+                }
+            }
+        }
 
     }
 
     public  void assignTechs() {
 
-        // assigning technicians to customers
-        /* Not every nail tech can perform every service (acceptedCategories)
-        *
-        * Employees enter EmployeeQ  e1 - e2 - e3 - e4
-        * Customers enter customerQ  c1 - c2 - c3 - c4
-        *
-        * for c1's request we have to check who is first in the employeeQ
-        * if e1 canPerform c1's request remove both e1 and c1 from their Q's
-        * else - offer e1 back to his Q , poll the next e , repeat until you find the right e for the service request
-        * */
+        clockIn();
+        customerRequests();
+        assignEmployees();
 
-        // as long as there are customers waiting and employees available
-        while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
-
-            // check if an employee can perform a service
-            for (Employee employee : employeeQ) {
-                if (employee.canPerform(customerQ.element().getRequestedService())) {
-                    System.out.println(employee + " can perform " + customerQ.element().getRequestedService() + " for " + customerQ.element().getName());
-                }
-            }
-
-        }
 
 
 
