@@ -50,25 +50,24 @@ public class WorkDay {
 
     }
 
-    private  void assignEmployees() {
-
-        // determines repetition
-        while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
-            // handles traversal
-            for (Employee employee : employeeQ) {
-                // find the first customer in line
-                Customer currentCustomer = customerQ.element();
+    private Employee findCorrectEmployees() {
+        // handles traversal
+        for (Employee employee : employeeQ) {
+            // find the first customer in line
+            Customer currentCustomer = customerQ.element();
+            if (employee.canPerform(currentCustomer.getRequestedService())) {
+                return employee;
             }
         }
-
+        return null;
     }
 
 
-    public  void assignTechs() {
+    public  void workDaySim() {
 
         clockIn();
         customerRequests();
-        assignEmployees();
+        //assignEmployees();
 
     }
 
