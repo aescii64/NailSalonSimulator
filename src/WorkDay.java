@@ -51,29 +51,32 @@ public class WorkDay {
     }
 
     private  void assignEmployees() {
-        Customer currentCustomer = customerQ.element();
+        //Customer currentCustomer = customerQ.element(); wrong
+        // is there still work to do?
         while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
+            //Customer currentCustomer = customerQ.element(); wrong
+            // who handles the work
             for (Employee employee : employeeQ) {
+                Customer currentCustomer = customerQ.element();
+                // work has been assigned
                 if (employee.canPerform((currentCustomer.getRequestedService()))) {
                     System.out.println(employee.getName() + " can perform " + currentCustomer.getRequestedService() + " for " + currentCustomer);
+                    // work is done remove them from the lines
                     employeeQ.remove(employee);
                     customerQ.remove(currentCustomer);
-
                 }
-            }
-        }
 
+            }
+
+        }
     }
+
 
     public  void assignTechs() {
 
         clockIn();
         customerRequests();
         assignEmployees();
-
-
-
-
 
     }
 
