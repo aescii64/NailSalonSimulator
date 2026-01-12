@@ -5,13 +5,13 @@ import java.util.Queue;
 public class WorkDay {
 
     private Queue<Employee> employeeQ;
-    private Queue<Customer> customerLine;
+    private Queue<Customer> customerQ;
     private List<ServiceSelector> serviceRequest;
 
-    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerLine, List<ServiceSelector> serviceRequest) {
+    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerQ, List<ServiceSelector> serviceRequest) {
 
         this.employeeQ = employeeQ;
-        this.customerLine = customerLine;
+        this.customerQ = customerQ;
         this.serviceRequest = serviceRequest;
     }
 
@@ -23,7 +23,7 @@ public class WorkDay {
 
     // add customers to create customer line
     public void addCustomer(Customer customer) {
-        customerLine.add(customer);
+        customerQ.add(customer);
 
     }
 
@@ -39,7 +39,7 @@ public class WorkDay {
 
     public void customerRequests() {
         System.out.println("---- Customers are checking in!! ----\n");
-        for (Customer c : customerLine) {
+        for (Customer c : customerQ) {
             System.out.println(c.getName() + " just checked in");
             System.out.println(c.getName() + " would like a " + c.getRequestedService());
             System.out.println("\n");
@@ -47,21 +47,22 @@ public class WorkDay {
         }
     }
 
-    public void assignTechs() {
+    public  void assignTechs() {
         // assigning technicians to customers
-        while (!employeeQ.isEmpty() && !customerLine.isEmpty()) {
-            Customer customer = customerLine.poll();
-            Employee employee = employeeQ.poll();
+        /* Not every nail tech can perform every service (acceptedCategories)
+        *
+        * this logic should:
+        *  1: check what service the customer is requesting
+        *  2: check that the service request and the employee accepted categories match
+        *  3: while both Q's are not empty,
+        *  4: peek at both Q's to see if the service request and category match.
+        *  5: track the nail  technicians you've checked to do the service. keep checking until you find the right one
+        *  6: assign the right tech to the customer
+        *  7: print a statement that there's no one available for a customer if there is no tech assigned to that customer
+        * */
 
-            if (employee.canPerform(customer.getRequestedService())) {
-                System.out.println(employee.getName() + " will take care of " + customer.getName());
-                customerLine.remove(customer);
-                employeeQ.remove(employee);
-            } else {
-                System.out.println("There are no available technicians for " + customer.getName() + "'s service");
-                break;
-            }
-        }
+
+
     }
 
 

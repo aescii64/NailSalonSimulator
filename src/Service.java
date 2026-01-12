@@ -5,8 +5,8 @@ public enum Service {
     DELUXE_MANICURE("Deluxe Manicure", 55.00, ServiceCategory.MANICURE),
     BASIC_PEDICURE("Basic Pedicure", 35.00, ServiceCategory.PEDICURE),
     SPA_PEDICURE("Spa Pedicure", 45.00, ServiceCategory.PEDICURE),
-    DELUXE_PEDICURE("Deluxe Pedicure", 50.00, ServiceCategory.PEDICURE),
-    ADD_GEL("Add Gel", 20.00, ServiceCategory.ADD_ON);
+    DELUXE_PEDICURE("Deluxe Pedicure", 50.00, ServiceCategory.PEDICURE);
+
 
     private final String name;
     private final double price;
@@ -37,5 +37,7 @@ public enum Service {
     public String toString() {
         return name;
     }
+
+
 }
 
