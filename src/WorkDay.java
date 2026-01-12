@@ -46,6 +46,11 @@ public class WorkDay {
             System.out.println("\n");
 
         }
+
+    }
+
+    private static void assignEmployees() {
+
     }
 
     public  void assignTechs() {
