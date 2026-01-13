@@ -1,8 +1,5 @@
-import javax.swing.text.html.HTMLDocument;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Iterator;
 
 public class WorkDay {
 
@@ -50,26 +47,29 @@ public class WorkDay {
 
     }
 
-    private Employee findCorrectEmployees() {
+    public Employee findCorrectEmployees() {
         // handles traversal
         for (Employee employee : employeeQ) {
             // find the first customer in line
             Customer currentCustomer = customerQ.element();
             if (employee.canPerform(currentCustomer.getRequestedService())) {
+                System.out.println(employee.getName() + " for " + currentCustomer.getName());
                 return employee;
             }
+
         }
         return null;
     }
 
 
-    public  void workDaySim() {
 
-        clockIn();
-        customerRequests();
-        //assignEmployees();
-
+    public void employeeRemoval(Employee employee) {
+        employeeQ.remove(employee);
+        System.out.println(employee + " was removed");
     }
 
-
+    public void customerRemoval(Customer customer){
+        customerQ.remove(customer);
+        System.out.println(customer + " was removed");
+    }
 }
