@@ -11,8 +11,9 @@ public class Driver {
         Queue<Employee> employeeQ = new LinkedList<>();
         Queue<Customer> customerQ = new LinkedList<>();
         List<ServiceSelector> serviceRequest = new ArrayList<>();
+        List<ServiceCategory> acceptedService = new ArrayList<>();
 
-        WorkDay workDay = new WorkDay(employeeQ, customerQ, serviceRequest );
+        WorkDay workDay = new WorkDay(employeeQ, customerQ, serviceRequest, acceptedService );
 
 
         Employee e1 = new Employee("Paul", Set.of(ServiceCategory.MANICURE));
@@ -37,8 +38,7 @@ public class Driver {
         workDay.addCustomer(c4);
 
 
-        // run sim
-
+        // run simulation
         workDay.workDaySim();
 
     }

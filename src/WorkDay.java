@@ -6,12 +6,14 @@ public class WorkDay {
     private static Queue<Employee> employeeQ;
     private Queue<Customer> customerQ;
     private List<ServiceSelector> serviceRequest;
+    private List<ServiceCategory> acceptedService;
 
-    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerQ, List<ServiceSelector> serviceRequest) {
+    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerQ, List<ServiceSelector> serviceRequest, List<ServiceCategory> acceptedService) {
 
         this.employeeQ = employeeQ;
         this.customerQ = customerQ;
         this.serviceRequest = serviceRequest;
+        this.acceptedService = acceptedService;
     }
 
     // add employees to the turn rotation
@@ -31,7 +33,7 @@ public class WorkDay {
     private void clockIn(){
         System.out.println("---- Employees are arriving!! ----\n");
         for ( Employee e : employeeQ) {
-            System.out.println(e.getName() + " has arrived");
+            System.out.println(e.getName() + " has arrived, they can perform " + e.getAcceptedCategories());
             System.out.println("\n");
         }
     }
@@ -48,9 +50,7 @@ public class WorkDay {
     }
 
     public Employee findCorrectEmployees() {
-        // handles traversal
         for (Employee employee : employeeQ) {
-            // find the first customer in line
             Customer currentCustomer = customerQ.element();
             if (employee.canPerform(currentCustomer.getRequestedService())) {
                 System.out.println(employee.getName() + " will perform " + currentCustomer.getName() +"'s " + currentCustomer.getRequestedService());
@@ -74,6 +74,7 @@ public class WorkDay {
     }
 
     public void workDaySim() {
+        boolean serviceMismatch = false;
 
         clockIn();
         customerRequests();
@@ -82,6 +83,7 @@ public class WorkDay {
             Employee employeeToBeRemoved = findCorrectEmployees();
             Customer currentCustomer = customerQ.element();
             if (employeeToBeRemoved == null) {
+                serviceMismatch = true; // employee can't perform that service
                 break;
             } else {
                 employeeRemoval(employeeToBeRemoved);
@@ -89,6 +91,13 @@ public class WorkDay {
 
             }
         }
-        System.out.println("\n\nThere are no more customers left, the work day is done :)");
+        System.out.println("\n---- The day is done!! ----\n");
+        // check if anyone was left behind
+        if(serviceMismatch){
+            System.out.println("Some customers could not be served with the available employees :(");
+        }
+        else {
+            System.out.println("Perfect Day :)");
+        }
     }
 }
