@@ -39,7 +39,7 @@ public class WorkDay {
     private void clockIn(){
         System.out.println("---- Employees are arriving!! ----\n");
         for ( Employee e : employeeQ) {
-            System.out.println(e.getName() + " has arrived, they can perform " + e.getAcceptedCategories());
+            System.out.println(e.getName() + " has arrived");
             System.out.println("\n");
         }
     }
@@ -101,10 +101,8 @@ public class WorkDay {
 
                 employeeRemoval(employeeToBeRemoved);
                 customerRemoval(currentCustomer);
-
-
-
         }
+
         System.out.println("\n---- The day is done!! ----\n");
         // check if anyone was left behind
         if(serviceMismatch){
@@ -113,6 +111,7 @@ public class WorkDay {
         else {
             System.out.println("Perfect Day :)");
         }
+
         System.out.println("\n---- Today's Earnings ----\n");
         for (Employee e: allEmployees){
             System.out.println(e.getName() + ": $" + e.getTotalEarnings() + "\n");
