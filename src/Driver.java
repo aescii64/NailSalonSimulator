@@ -37,27 +37,9 @@ public class Driver {
         workDay.addCustomer(c4);
 
 
-       while (!employeeQ.isEmpty() && !customerQ.isEmpty()){
-           Employee employeeToBeRemoved = workDay.findCorrectEmployees();
-           Customer currentCustomer = customerQ.element();
-           if (employeeToBeRemoved == null) {
-               break;
-           } else {
-               workDay.employeeRemoval(employeeToBeRemoved);
-               workDay.customerRemoval(currentCustomer);
-
-           }
-
-
-       }
-
-
-
-
-
-
         // run sim
 
+        workDay.workDaySim();
 
     }
 }

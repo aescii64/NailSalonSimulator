@@ -53,7 +53,7 @@ public class WorkDay {
             // find the first customer in line
             Customer currentCustomer = customerQ.element();
             if (employee.canPerform(currentCustomer.getRequestedService())) {
-                System.out.println(employee.getName() + " for " + currentCustomer.getName());
+                System.out.println(employee.getName() + " will perform " + currentCustomer.getName() +"'s " + currentCustomer.getRequestedService());
                 return employee;
             }
 
@@ -65,11 +65,30 @@ public class WorkDay {
 
     public void employeeRemoval(Employee employee) {
         employeeQ.remove(employee);
-        System.out.println(employee + " was removed");
+        System.out.println(employee + " completed the service and has left" );
     }
 
     public void customerRemoval(Customer customer){
         customerQ.remove(customer);
-        System.out.println(customer + " was removed");
+        System.out.println(customer + " has left");
+    }
+
+    public void workDaySim() {
+
+        clockIn();
+        customerRequests();
+
+        while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
+            Employee employeeToBeRemoved = findCorrectEmployees();
+            Customer currentCustomer = customerQ.element();
+            if (employeeToBeRemoved == null) {
+                break;
+            } else {
+                employeeRemoval(employeeToBeRemoved);
+                customerRemoval(currentCustomer);
+
+            }
+        }
+        System.out.println("\n\nThere are no more customers left, the work day is done :)");
     }
 }
