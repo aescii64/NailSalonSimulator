@@ -12,8 +12,11 @@ public class Driver {
         Queue<Customer> customerQ = new LinkedList<>();
         List<ServiceSelector> serviceRequest = new ArrayList<>();
         List<ServiceCategory> acceptedService = new ArrayList<>();
+        List<Employee> allEmployees = new ArrayList<>();
+        double salonTotalEarnings = 0.0;
 
-        WorkDay workDay = new WorkDay(employeeQ, customerQ, serviceRequest, acceptedService );
+
+        WorkDay workDay = new WorkDay(employeeQ, customerQ, serviceRequest, acceptedService, allEmployees, salonTotalEarnings);
 
 
         Employee e1 = new Employee("Paul", Set.of(ServiceCategory.MANICURE));

@@ -7,18 +7,24 @@ public class WorkDay {
     private Queue<Customer> customerQ;
     private List<ServiceSelector> serviceRequest;
     private List<ServiceCategory> acceptedService;
+    private List<Employee> allEmployees;
+    private double salonTotalEarnings;
 
-    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerQ, List<ServiceSelector> serviceRequest, List<ServiceCategory> acceptedService) {
+    public WorkDay(Queue<Employee> employeeQ, Queue<Customer> customerQ, List<ServiceSelector> serviceRequest, List<ServiceCategory> acceptedService, List<Employee> allEmployees, double salonTotalEarnings) {
 
         this.employeeQ = employeeQ;
         this.customerQ = customerQ;
         this.serviceRequest = serviceRequest;
         this.acceptedService = acceptedService;
+        this.allEmployees = allEmployees;
+        this.salonTotalEarnings = salonTotalEarnings;
+
     }
 
     // add employees to the turn rotation
     public void addEmployee(Employee employee) {
         employeeQ.add(employee);
+        allEmployees.add(employee);
 
     }
 
@@ -48,6 +54,7 @@ public class WorkDay {
         }
 
     }
+
 
     public Employee findCorrectEmployees() {
         for (Employee employee : employeeQ) {
@@ -82,14 +89,21 @@ public class WorkDay {
         while (!employeeQ.isEmpty() && !customerQ.isEmpty()) {
             Employee employeeToBeRemoved = findCorrectEmployees();
             Customer currentCustomer = customerQ.element();
+
             if (employeeToBeRemoved == null) {
                 serviceMismatch = true; // employee can't perform that service
                 break;
-            } else {
+            }
+
+            double price = currentCustomer.getRequestedService().getPrice();
+            employeeToBeRemoved.addEarnings(price);
+            salonTotalEarnings += price;
+
                 employeeRemoval(employeeToBeRemoved);
                 customerRemoval(currentCustomer);
 
-            }
+
+
         }
         System.out.println("\n---- The day is done!! ----\n");
         // check if anyone was left behind
@@ -99,5 +113,13 @@ public class WorkDay {
         else {
             System.out.println("Perfect Day :)");
         }
+        System.out.println("\n---- Today's Earnings ----\n");
+        for (Employee e: allEmployees){
+            System.out.println(e.getName() + ": $" + e.getTotalEarnings() + "\n");
+        }
+        System.out.println("Salon Total Earnings: $" + salonTotalEarnings);
+
     }
+
+
 }
